@@ -11,6 +11,6 @@
 ## 团队成员
 
 ## License
-NMapper is licensed under the [MIT license](LICENSE.TXT).
+NMapper is licensed under the [MIT license](LICENSE).
 
 
