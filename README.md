@@ -14,7 +14,7 @@
 
 ## OnlineChart
 
-欢迎在线与我们讨论：[Gitter](https://gitter.im/NMS-NMapper/community)
+加入我们，参与讨论，贡献代码，成为组内一员，另欢迎在线与我们讨论：[Gitter](https://gitter.im/NMS-NMapper/community)
 
 ## License
 NMapper is licensed under the [MIT license](LICENSE).
