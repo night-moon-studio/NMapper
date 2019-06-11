@@ -6,11 +6,15 @@
 
 ## 需求讨论
 
-欢迎大家积极用于提出[issue](https://github.com/night-moon-studio/NMapper/issues/new)
+欢迎大家积极用于提出 [issue](https://github.com/night-moon-studio/NMapper/issues/new) 
 
 ## 团队成员  
 
 [AlineGuan](https://github.com/AlineGuan)、[hjdo](https://github.com/hjdo)、[q760986433](https://github.com/q760986433)、[yueshen005](https://github.com/yueshen005)、[zb616](https://github.com/zb616)、[Aosir](https://github.com/Aosir)
+
+## OnlineChart
+
+欢迎在线与我们讨论：[Gitter](https://gitter.im/NMS-NMapper/community)
 
 ## License
 NMapper is licensed under the [MIT license](LICENSE).
