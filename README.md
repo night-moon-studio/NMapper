@@ -10,7 +10,7 @@
 
 ## 团队成员  
 
-[AlineGuan](https://github.com/orgs/night-moon-studio/people/AlineGuan)、[hjdo](https://github.com/orgs/night-moon-studio/people/hjdo)、[q760986433](https://github.com/orgs/night-moon-studio/people/q760986433)、[yueshen005](https://github.com/orgs/night-moon-studio/people/yueshen005)、[zb616](https://github.com/orgs/night-moon-studio/people/zb616)、[Aosir]()
+[AlineGuan](https://github.com/orgs/night-moon-studio/people/AlineGuan)、[hjdo](https://github.com/orgs/night-moon-studio/people/hjdo)、[q760986433](https://github.com/orgs/night-moon-studio/people/q760986433)、[yueshen005](https://github.com/orgs/night-moon-studio/people/yueshen005)、[zb616](https://github.com/orgs/night-moon-studio/people/zb616)、[Aosir](https://github.com/Aosir)
 
 ## License
 NMapper is licensed under the [MIT license](LICENSE).
