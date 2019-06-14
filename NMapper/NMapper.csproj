@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Natasha" Version="0.6.0" />
+    <PackageReference Include="Natasha" Version="0.6.1.1" />
   </ItemGroup>
 
 </Project>

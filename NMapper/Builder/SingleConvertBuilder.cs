@@ -4,7 +4,7 @@ using Natasha;
 
 namespace NMapper.Builder
 {
-    public class SingleConvertBuilder<TDest,TSrc>: TypeIterator
+    public class SingleConvertBuilder<TDest, TSrc> : TypeIterator
     {
         private const string SRC = "s";
         private const string DEST = "d";
@@ -30,14 +30,7 @@ namespace NMapper.Builder
                 }
                 else
                 {
-                    if (destInfo.FieldType == typeof(string))
-                    {
-                        _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name}.ToString();");
-                    }
-                    else
-                    {
-                        _script.AppendLine($"{DEST}.{destInfo.Name}=({NameReverser.GetName(destInfo.FieldType)}){SRC}.{destInfo.Name};");
-                    }
+                    _script.AppendLine($"{DEST}.{destInfo.Name}=Convert.To{NameReverser.GetName(destInfo.FieldType)}({SRC}.{destInfo.Name});");
                 }
             }
         }
@@ -53,15 +46,7 @@ namespace NMapper.Builder
                 }
                 else
                 {
-                    if (destInfo.PropertyType == typeof(string))
-                    {
-                        _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name}.ToString();");
-                    }
-                    else
-                    {
-                        _script.AppendLine($"{DEST}.{destInfo.Name}=({NameReverser.GetName(destInfo.PropertyType)}){SRC}.{destInfo.Name};");
-                    }
-                   
+                    _script.AppendLine($"{DEST}.{destInfo.Name}=Convert.To{NameReverser.GetName(destInfo.PropertyType)}({SRC}.{destInfo.Name});");
                 }
             }
         }
@@ -164,10 +149,10 @@ namespace NMapper.Builder
                 return _handler
                             .ClassName($"NMapperSingleConvert{AvailableNameReverser.GetName(typeof(TSrc))}To{AvailableNameReverser.GetName(typeof(TDest))}")
                             .MethodName("Mapper")
-                            .Param<TSrc>(SRC)                
-                            .MethodBody(_script.ToString())        
-                            .Return<TDest>()                    
-                           .Complie();
+                            .Param<TSrc>(SRC)
+                            .MethodBody(_script.ToString())
+                            .Return<TDest>()
+                            .Complie();
             }
             return null;
         }

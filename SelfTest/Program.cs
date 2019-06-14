@@ -16,10 +16,11 @@ namespace SelfTest
             model.Time = DateTime.Now;
             model.Title = "gagagag";
             var result = NMapper<SingleDestModel>.SingleFrom(model);
-            var result1 = NMapper<SingleSrcModel>.SingleFrom(result);
+            var result1 = NMapper<SingleConvertDestModel>.SingleConvertFrom(result);
+            var result2 = NMapper<SingleConvertSrcModel>.SingleConvertFrom(result1);
 
-            var result2 = NMapper<SingleConvertSrcModel>.SingleFrom(model);
-            var result3 = NMapper<SingleConvertDestModel>.SingleConvertFrom(model);
+            SingleConvertSrcModel a = new SingleConvertSrcModel();
+            a.Age = Convert.ToInt32(result1.Age);
             Console.ReadKey();
         }
     }
