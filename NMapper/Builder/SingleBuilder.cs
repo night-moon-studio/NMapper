@@ -136,7 +136,7 @@ namespace NMapper.Builder
         {
             if (TypeRouter(typeof(TSrc)))
             {
-                //创建委托
+                //使用文件编译常驻内存
                 _handler.ComplierOption.UseFileComplie();
                 return _handler
                             .ClassName($"NMapperSingle{AvailableNameReverser.GetName(typeof(TSrc))}To{AvailableNameReverser.GetName(typeof(TDest))}")
