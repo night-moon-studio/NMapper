@@ -55,28 +55,6 @@ namespace NMapper.Builder
             var destInfo = _destType.GetField(info.MemberName);
             if (destInfo != null && !destInfo.IsInitOnly)
             {
-                if (destInfo.FieldType == info.Type)
-                {
-                    _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name};");
-                }
-                else
-                {
-                    if ((destInfo.FieldType.IsPrimitive || destInfo.FieldType == typeof(string))
-                        && (info.Type.IsPrimitive || info.Type == typeof(string))
-                        )
-                    {
-                        _script.AppendLine($"{DEST}.{destInfo.Name}=Convert.To{NameReverser.GetName(destInfo.FieldType)}({SRC}.{destInfo.Name});");
-                    }
-
-                }
-            }
-        }
-        public override void FieldArrayOnceTypeHandler(BuilderInfo info)
-        {
-            _handler.Using(info.Type);
-            var destInfo = _destType.GetField(info.MemberName);
-            if (destInfo != null && !destInfo.IsInitOnly)
-            {
                 if (destInfo.FieldType == info.Type
                     || info.Type.IsSubclassOf(destInfo.FieldType)
                     || info.Type.IsImplementFrom(destInfo.FieldType))
@@ -84,6 +62,10 @@ namespace NMapper.Builder
                     _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name};");
                 }
             }
+        }
+        public override void FieldArrayOnceTypeHandler(BuilderInfo info)
+        {
+            SetField(info);
         }
         public override void FieldEntityHandler(BuilderInfo info)
         {
@@ -152,7 +134,17 @@ namespace NMapper.Builder
         }
         public override void PropertyEntityHandler(BuilderInfo info)
         {
-            SetProperty(info);
+            _handler.Using(info.Type);
+            var destInfo = _destType.GetProperty(info.MemberName);
+            if (destInfo != null && destInfo.CanWrite)
+            {
+                if (destInfo.PropertyType == info.Type
+                    || info.Type.IsSubclassOf(destInfo.PropertyType)
+                    || info.Type.IsImplementFrom(destInfo.PropertyType))
+                {
+                    _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name};");
+                }
+            }
         }
 
         public override void PropertyArrayEntityHandler(BuilderInfo info)
