@@ -22,15 +22,13 @@ namespace NMapper.Builder
         {
             _handler.Using(info.Type);
             var destInfo = _destType.GetField(info.MemberName);
-            if (destInfo != null)
+            if (destInfo != null && !destInfo.IsInitOnly)
             {
-                if (destInfo.FieldType == info.Type)
+                if (destInfo.FieldType == info.Type
+                    || info.Type.IsSubclassOf(destInfo.FieldType)
+                    || info.Type.IsImplementFrom(destInfo.FieldType))
                 {
                     _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name};");
-                }
-                else
-                {
-                    _script.AppendLine($"{DEST}.{destInfo.Name}=Convert.To{NameReverser.GetName(destInfo.FieldType)}({SRC}.{destInfo.Name});");
                 }
             }
         }
@@ -38,32 +36,68 @@ namespace NMapper.Builder
         {
             _handler.Using(info.Type);
             var destInfo = _destType.GetProperty(info.MemberName);
-            if (destInfo != null)
+            if (destInfo != null && destInfo.CanWrite)
             {
-                if (destInfo.PropertyType == info.Type && destInfo.CanWrite)
+                if (destInfo.PropertyType == info.Type
+                    || info.Type.IsSubclassOf(destInfo.PropertyType)
+                    || info.Type.IsImplementFrom(destInfo.PropertyType))
                 {
                     _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name};");
-                }
-                else
-                {
-                    _script.AppendLine($"{DEST}.{destInfo.Name}=Convert.To{NameReverser.GetName(destInfo.PropertyType)}({SRC}.{destInfo.Name});");
                 }
             }
         }
 
 
-        #region MyRegion
+        #region Field
         public override void FieldOnceTypeHandler(BuilderInfo info)
         {
-            SetField(info);
+            _handler.Using(info.Type);
+            var destInfo = _destType.GetField(info.MemberName);
+            if (destInfo != null && !destInfo.IsInitOnly)
+            {
+                if (destInfo.FieldType == info.Type)
+                {
+                    _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name};");
+                }
+                else
+                {
+                    if ((destInfo.FieldType.IsPrimitive || destInfo.FieldType == typeof(string))
+                        && (info.Type.IsPrimitive || info.Type == typeof(string))
+                        )
+                    {
+                        _script.AppendLine($"{DEST}.{destInfo.Name}=Convert.To{NameReverser.GetName(destInfo.FieldType)}({SRC}.{destInfo.Name});");
+                    }
+
+                }
+            }
         }
         public override void FieldArrayOnceTypeHandler(BuilderInfo info)
         {
-            SetField(info);
+            _handler.Using(info.Type);
+            var destInfo = _destType.GetField(info.MemberName);
+            if (destInfo != null && !destInfo.IsInitOnly)
+            {
+                if (destInfo.FieldType == info.Type
+                    || info.Type.IsSubclassOf(destInfo.FieldType)
+                    || info.Type.IsImplementFrom(destInfo.FieldType))
+                {
+                    _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name};");
+                }
+            }
         }
         public override void FieldEntityHandler(BuilderInfo info)
         {
-            SetField(info);
+            _handler.Using(info.Type);
+            var destInfo = _destType.GetProperty(info.MemberName);
+            if (destInfo != null && destInfo.CanWrite)
+            {
+                if (destInfo.PropertyType == info.Type
+                    || info.Type.IsSubclassOf(destInfo.PropertyType)
+                    || info.Type.IsImplementFrom(destInfo.PropertyType))
+                {
+                    _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name};");
+                }
+            }
         }
 
         public override void FieldArrayEntityHandler(BuilderInfo info)
@@ -93,7 +127,24 @@ namespace NMapper.Builder
         #region Property
         public override void PropertyOnceTypeHandler(BuilderInfo info)
         {
-            SetProperty(info);
+            _handler.Using(info.Type);
+            var destInfo = _destType.GetProperty(info.MemberName);
+            if (destInfo != null && destInfo.CanWrite)
+            {
+                if (destInfo.PropertyType == info.Type)
+                {
+                    _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name};");
+                }
+                else
+                {
+                    if ((destInfo.PropertyType.IsPrimitive || destInfo.PropertyType == typeof(string))
+                        && (info.Type.IsPrimitive || info.Type == typeof(string))
+                        )
+                    {
+                        _script.AppendLine($"{DEST}.{destInfo.Name}=Convert.To{NameReverser.GetName(destInfo.PropertyType)}({SRC}.{destInfo.Name});");
+                    }
+                }
+            }
         }
         public override void PropertyArrayOnceTypeHandler(BuilderInfo info)
         {
