@@ -15,9 +15,9 @@ namespace SelfTest
             model.Name = "小明";
             model.Time = DateTime.Now;
             model.Title = "gagagag";
-            var result = NMapper<SingleDestModel>.SingleFrom(model);
-            var result1 = NMapper<SingleConvertDestModel>.SingleConvertFrom(result);
-            var result2 = NMapper<SingleConvertSrcModel>.SingleConvertFrom(result1);
+            var result = SimpleMapper<SingleDestModel>.From(model);
+            var result1 = SimpleMapper<SingleConvertDestModel>.From(result);
+            var result2 = SimpleMapper<SingleConvertSrcModel>.From(result1);
 
             SingleConvertSrcModel a = new SingleConvertSrcModel();
             a.Age = Convert.ToInt32(result1.Age);

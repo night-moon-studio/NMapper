@@ -4,14 +4,14 @@ using Natasha;
 
 namespace NMapper.Builder
 {
-    public class SingleBuilder<TDest,TSrc>: TypeIterator
+    public class SimpleBuilder<TDest, TSrc> : TypeIterator
     {
         private const string SRC = "s";
         private const string DEST = "d";
         private readonly StringBuilder _script;
         private readonly Type _destType;
         private readonly FastMethodOperator _handler;
-        public SingleBuilder()
+        public SimpleBuilder()
         {
             _script = new StringBuilder();
             _destType = typeof(TDest);
@@ -28,6 +28,10 @@ namespace NMapper.Builder
                 {
                     _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name};");
                 }
+                else
+                {
+                    _script.AppendLine($"{DEST}.{destInfo.Name}=Convert.To{NameReverser.GetName(destInfo.FieldType)}({SRC}.{destInfo.Name});");
+                }
             }
         }
         private void SetProperty(BuilderInfo info)
@@ -39,6 +43,10 @@ namespace NMapper.Builder
                 if (destInfo.PropertyType == info.Type && destInfo.CanWrite)
                 {
                     _script.AppendLine($"{DEST}.{destInfo.Name}={SRC}.{destInfo.Name};");
+                }
+                else
+                {
+                    _script.AppendLine($"{DEST}.{destInfo.Name}=Convert.To{NameReverser.GetName(destInfo.PropertyType)}({SRC}.{destInfo.Name});");
                 }
             }
         }
@@ -136,15 +144,15 @@ namespace NMapper.Builder
         {
             if (TypeRouter(typeof(TSrc)))
             {
-                //使用文件编译常驻内存
+                //创建委托
                 _handler.ComplierOption.UseFileComplie();
                 return _handler
-                            .ClassName($"NMapperSingle{AvailableNameReverser.GetName(typeof(TSrc))}To{AvailableNameReverser.GetName(typeof(TDest))}")
+                            .ClassName($"NMapperSingleConvert{AvailableNameReverser.GetName(typeof(TSrc))}To{AvailableNameReverser.GetName(typeof(TDest))}")
                             .MethodName("Mapper")
-                            .Param<TSrc>(SRC)                
-                            .MethodBody(_script.ToString())        
-                            .Return<TDest>()                    
-                           .Complie();
+                            .Param<TSrc>(SRC)
+                            .MethodBody(_script.ToString())
+                            .Return<TDest>()
+                            .Complie();
             }
             return null;
         }
