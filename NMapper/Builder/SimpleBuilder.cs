@@ -123,7 +123,7 @@ namespace NMapper.Builder
                         && (info.Type.IsPrimitive || info.Type == typeof(string))
                         )
                     {
-                        _script.AppendLine($"{DEST}.{destInfo.Name}=Convert.To{NameReverser.GetName(destInfo.PropertyType)}({SRC}.{destInfo.Name});");
+                        _script.AppendLine($"{DEST}.{destInfo.Name}=Convert.To{destInfo.PropertyType.GetDevelopName()}({SRC}.{destInfo.Name});");
                     }
                 }
             }
@@ -175,7 +175,7 @@ namespace NMapper.Builder
         public override void EntityStartHandler(BuilderInfo info)
         {
             _script.Append($@"if({SRC}==null){{return null;}}");
-            _script.Append($"var {DEST} = new {NameReverser.GetName<TDest>()}();");
+            _script.Append($"var {DEST} = new {_destType.GetDevelopName()}();");
         }
 
         public override void EntityReturnHandler(BuilderInfo info)
