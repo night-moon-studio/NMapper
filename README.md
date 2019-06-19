@@ -11,7 +11,7 @@
 
 ## 团队成员  
 
-[AlineGuan](https://github.com/AlineGuan)、[hjdo](https://github.com/hjdo)、[q760986433](https://github.com/q760986433)、[yueshen005](https://github.com/yueshen005)、[zb616](https://github.com/zb616)、[Aosir](https://github.com/Aosir)
+
 
 ## OnlineChart
 
